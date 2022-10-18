@@ -3,9 +3,6 @@ import React, { useEffect, useState } from 'react';
 import firebase from '../../firebaseConnection';
 import { StyleSheet, Text, View, TouchableOpacity,Button} from 'react-native';
 
-
-
-
 export default function Home(){
 const [nome, setNome] = useState('');
 

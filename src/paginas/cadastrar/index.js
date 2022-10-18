@@ -1,12 +1,31 @@
-import React from "react";
+import firebase from '../../firebaseConnection';
 import { SafeAreaView, StyleSheet, TextInput, Text, TouchableOpacity } from "react-native";
+import React, {useState} from "react";
 
-const UselessTextInput = () => {
-  const [textNome, onChangeText] = React.useState('');
-  const [number1, onChangeNumber1] = React.useState('');
-  const [number2, onChangeNumber2] = React.useState('');
-  const [number3, onChangeNumber3] = React.useState('');
-  const [textLink, onChangeText2] = React.useState('');
+export default function Cadastrar(){
+
+  const [textNome, setNome] = useState('');
+  const [number1, setNumber1] = useState('');
+  const [number2, setNumber2] = useState('');
+  const [number3, setNumber3] = useState('');
+  const [textLink, setText2] = useState('');
+
+  async function cadastrar(){
+
+    const alunos = await firebase.database().ref('Alunos')
+    const chave = alunos.push().key;
+
+    alunos.child(chave).set ({
+
+      Nome: textNome,
+      Nota01: number1,
+      Nota02: number2,
+      Nota03: number3,
+      Imagem: textLink
+
+    })
+
+  }
 
   return (
     <SafeAreaView>
@@ -14,46 +33,48 @@ const UselessTextInput = () => {
         <Text style={styles.text}>Nome do aluno</Text>
       <TextInput
         style={styles.input}
-        onChangeText={onChangeText}
+        onChangeText={(textNome) => setNome(textNome) }
         value={textNome}
         placeholder="Insira o nome do aluno"
       />
       <Text style={styles.text}>Nota 01</Text>
       <TextInput
         style={styles.input}
-        onChangeText={onChangeNumber1}
+        onChangeText={(number1) => setNumber1(number1) }
         value={number1}
         placeholder="Insira a nota 01"
       />
       <Text style={styles.text}>Nota 02</Text>
       <TextInput
         style={styles.input}
-        onChangeText={onChangeNumber2}
+        onChangeText={(number2) => setNumber2(number2) }
         value={number2}
         placeholder="Insira a nota 02"
       />
       <Text style={styles.text}>Nota 03</Text>
       <TextInput
         style={styles.input}
-        onChangeText={onChangeNumber3}
+        onChangeText={(number3) => setNumber3(number3) }
         value={number3}
         placeholder="Insira a nota 03"
       />
       <Text style={styles.text}>Foto do aluno</Text>
       <TextInput
         style={styles.input}
-        onChangeText={onChangeText2}
+        onChangeText={(textLink) => setText2(textLink) }
         value={textLink}
         placeholder="Link da foto do aluno"
       />
-       <TouchableOpacity style={[styles.botoes ,{backgroundColor:'red'}]}>
+       <TouchableOpacity style={[styles.botoes ,{backgroundColor:'blue'}]} onPress={cadastrar}>
                     <Text> Cadastrar Aluno </Text>
 
             </TouchableOpacity>
+
+      <Text>{textNome}</Text>
+
     </SafeAreaView>
   );
-};
-
+}
 const styles = StyleSheet.create({
   input: {
     height: 40,
@@ -75,14 +96,13 @@ const styles = StyleSheet.create({
   botoes:{
     width:'390px',
     alignItems:'center',
-    justifyContent:'flex-start',
     height: 40,
     borderRadius: 5,
     marginBottom: 10,
-
     fontSize:10,
-    color:'white',
-    flexDirection:'row',
+    color: "white",
+    justifyContent: 'space-around',
+    marginLeft: '11px',
   },
 
   titulo: {
@@ -93,5 +113,3 @@ const styles = StyleSheet.create({
     marginBottom: '20px'
   },
 }); 
-
-export default UselessTextInput;
