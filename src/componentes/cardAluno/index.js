@@ -1,38 +1,30 @@
 import { View,Text, Image, StyleSheet } from "react-native";
+import React from "react";
+import { TouchableOpacity } from "react-native-gesture-handler";
+import { useNavigation } from "@react-navigation/core";
 
- import React from "react";
+ export default function CardAluno(data) {
 
+    const navigation = useNavigation()
 
- 
-
- export default function CardAluno() {
-
-
+    function irDetalhes(){
+        navigation.navigate('Detalhes', {dados:data})
+    }
 
     return (
+        <TouchableOpacity style={estilo.container}>
+            <Image style = {estilo.imagem}source={{uri: data.imagem}} />
+            <Text>{data.nome}</Text>
 
+        </TouchableOpacity>
 
-
-        <View style={estilo.container}>
-
-            <Image style = {estilo.imagem}source={{uri:'https://img.freepik.com/vetores-premium/aluno-fofo-pensando-ilustracao-dos-desenhos-animados_339032-1052.jpg'}} />
-
-            <Text> Aluno </Text>
-
-        </View>
-
-    )
-
+    );
  }
-
-
 
  const estilo = StyleSheet.create ({
 
      container: {
-
          marginHorizontal: 5,
-
          backgroundColor: '#abcdef',
 
      },

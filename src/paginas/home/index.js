@@ -1,4 +1,3 @@
-import { useNavigation } from '@react-navigation/native';
 import React, { useEffect, useState } from 'react';
 import firebase from '../../firebaseConnection';
 import CardAluno from '../../componentes/cardAluno';
@@ -10,7 +9,6 @@ const [aluno, setAlunos] = useState([]);
 useEffect(() =>{
 
     async function buscarAluno(){
-
         await firebase.database().ref('Alunos').on('value',(snapshot)=> {
             
             setAlunos([]);
@@ -32,8 +30,6 @@ useEffect(() =>{
     buscarAluno();
 },[])
 
-
-
 return(
 
     <View style = {{alignItems:'center'}}>
@@ -42,7 +38,7 @@ return(
         data = {aluno}
         numColumns= {2}
         keyExtractor= { (item)=>item.key}
-        renderItem ={ ({item}) => <CardAluno></CardAluno>}
+        renderItem ={ ({item}) => <CardAluno data = {item}></CardAluno>}
         />    
     </View>
 
